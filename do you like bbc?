@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Question</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      position: relative;
+    }
+    #response {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="question">Quick Question, do you like BBC🤔?</h1>
+  <div id="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
+  <div id="response"></div>
+
+  <script>
+    const noBtn = document.getElementById('no');
+    const yesBtn = document.getElementById('yes');
+    const responseDiv = document.getElementById('response');
+    const questionText = document.getElementById('question');
+
+    document.addEventListener('mousemove', function(e) {
+      const rect = noBtn.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const distX = mouseX - (rect.left + rect.width / 2);
+      const distY = mouseY - (rect.top + rect.height / 2);
+      const distance = Math.sqrt(distX * distX + distY * distY);
+
+      if (distance < 80) {
+        const offsetX = (Math.random() - 0.5) * 300;
+        const offsetY = (Math.random() - 0.5) * 300;
+        let newLeft = rect.left + offsetX;
+        let newTop = rect.top + offsetY;
+
+        // Clamp within window bounds
+        newLeft = Math.max(0, Math.min(window.innerWidth - rect.width, newLeft));
+        newTop = Math.max(0, Math.min(window.innerHeight - rect.height, newTop));
+
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${newLeft}px`;
+        noBtn.style.top = `${newTop}px`;
+      }
+    });
+
+    noBtn.addEventListener('click', function() {
+      questionText.textContent = "Bruh you're not the alpha";
+      this.style.display = 'none';
+    });
+
+    yesBtn.addEventListener('click', function() {
+      document.body.innerHTML = '<h1>Who\'s a Good Boy</h1><p style="font-size: 48px;">🫵🏻😂</p>';
+    });
+  </script>
+</body>
+</html>
